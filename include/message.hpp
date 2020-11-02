@@ -126,6 +126,8 @@ typedef enum {
     E_Message_UEAesCm128Sha1322Video,
 #endif // USE_OPENSSL
 #endif // RTP_STREAM
+
+    E_Message_LastContact,
 } MessageCompType;
 
 class SendingMessage

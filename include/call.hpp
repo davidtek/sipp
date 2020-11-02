@@ -176,6 +176,7 @@ protected:
 
     /* holds the route set */
     char         * dialog_route_set;
+    char         * last_contact;
     char         * next_req_url;
 
     /* cseq value for [cseq] keyword */

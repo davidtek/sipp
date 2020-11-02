@@ -116,6 +116,7 @@ struct KeywordMap SimpleKeywords[] = {
     {"last_cseq_number", E_Message_Last_CSeq_Number },
     {"last_message", E_Message_Last_Message },
     {"routes", E_Message_Routes },
+    {"last_contact", E_Message_LastContact },
     {"tdmmap", E_Message_TDM_Map },
     {"clock_tick", E_Message_ClockTick },
     {"users", E_Message_Users },

@@ -890,6 +890,7 @@ void call::init(scenario * call_scenario, SIPpSocket *socket, struct sockaddr_st
     recv_retrans_send_index = -1;
 
     dialog_route_set = NULL;
+    last_contact = NULL;
     next_req_url = NULL;
 
     cseq = 0;
@@ -1205,6 +1206,10 @@ call::~call()
     if (dialog_route_set) {
         free(dialog_route_set);
     }
+
+//    if (last_contact) {
+//         free(last_contact);
+//    }
 
     if (next_req_url) {
         free(next_req_url);
@@ -3858,6 +3863,16 @@ char* call::createSendingMessage(SendingMessage *src, int P_index, char *msg_buf
                 dest += snprintf(dest, left, ";tag=%s", peer_tag);
             }
             break;
+        case E_Message_LastContact:
+            if (last_contact) {
+                dest += sprintf(dest, "%s", last_contact);
+            }
+		  else
+		  {
+                dest += sprintf(dest, "Unknown");
+
+		  }
+            break;
         case E_Message_Routes:
             if (dialog_route_set) {
                 dest += sprintf(dest, "Route: %s", dialog_route_set);
@@ -5522,6 +5537,8 @@ bool call::process_incoming(const char* msg, const struct sockaddr_storage* src)
         strncat(rr, get_header_content(msg, "Record-Route:"), MAX_HEADER_LEN - 1);
         strncat(contact, get_header_content(msg, "Contact:"), MAX_HEADER_LEN - 1);
         computeRouteSetAndRemoteTargetUri(rr, contact, !reply_code);
+
+        last_contact = strtok( strdup(contact), "><") ;
         // WARNING("next_req_url is [%s]", next_req_url);
     }
 
